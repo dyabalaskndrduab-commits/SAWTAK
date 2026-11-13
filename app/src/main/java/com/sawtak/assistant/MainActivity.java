@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         getWindow().setNavigationBarColor(Color.rgb(10, 14, 25));
         LinearLayout page = new LinearLayout(this);
         page.setOrientation(LinearLayout.VERTICAL);
-        page.setPadding(34, 60, 34, 32);
+        page.setPadding(34, 48, 34, 28);
         page.setGravity(Gravity.CENTER_HORIZONTAL);
         page.setBackgroundColor(Color.rgb(10, 14, 25));
 
@@ -39,21 +39,30 @@ public class MainActivity extends Activity {
         sub.setTextSize(16);
         sub.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(-1, -2);
-        sp.topMargin = 18; sp.bottomMargin = 42;
+        sp.topMargin = 14; sp.bottomMargin = 24;
         page.addView(sub, sp);
+
+        TextView online = new TextView(this);
+        online.setText("وضع التعرف المتصل — العربية المصرية\nيحتاج إنترنت وتفعيل خدمة التعرف الصوتي على الهاتف");
+        online.setTextColor(Color.rgb(115, 220, 190));
+        online.setTextSize(14);
+        online.setGravity(Gravity.CENTER);
+        page.addView(online);
 
         status = new TextView(this);
         status.setText("الحالة: متوقف\nقل «يا مساعد» بعد تشغيل الاستماع");
-        status.setTextColor(Color.rgb(115, 220, 190));
-        status.setTextSize(17);
+        status.setTextColor(Color.WHITE);
+        status.setTextSize(16);
         status.setGravity(Gravity.CENTER);
-        page.addView(status);
+        LinearLayout.LayoutParams st = new LinearLayout.LayoutParams(-1, -2);
+        st.topMargin = 22;
+        page.addView(status, st);
 
         Button start = new Button(this);
         start.setText("تشغيل الاستماع الصوتي");
         start.setOnClickListener(v -> requestAndStart());
         LinearLayout.LayoutParams bp = new LinearLayout.LayoutParams(-1, -2);
-        bp.topMargin = 36;
+        bp.topMargin = 28;
         page.addView(start, bp);
 
         Button stop = new Button(this);
@@ -65,11 +74,11 @@ public class MainActivity extends Activity {
         page.addView(stop, bp);
 
         TextView examples = new TextView(this);
-        examples.setText("\nأمثلة للأوامر:\n• يا مساعد افتح واتساب\n• يا مساعد ارفع الصوت\n• يا مساعد شغّل الكشاف\n• يا مساعد افتح البلوتوث\n• يا مساعد كم البطارية؟\n• يا مساعد اتصل بـ 01012345678");
+        examples.setText("\nجرّب قول:\n• يا مساعد افتح واتساب\n• افتح يوتيوب\n• شغّل النور / اطفي الكشاف\n• علي الصوت / وطي الصوت\n• كام البطارية؟\n• الساعة كام؟\n• ابحث عن أخبار اليوم");
         examples.setTextColor(Color.WHITE);
-        examples.setTextSize(16);
+        examples.setTextSize(15);
         LinearLayout.LayoutParams ep = new LinearLayout.LayoutParams(-1, -2);
-        ep.topMargin = 34;
+        ep.topMargin = 20;
         page.addView(examples, ep);
         setContentView(page);
     }
@@ -89,7 +98,7 @@ public class MainActivity extends Activity {
     private void startVoice() {
         Intent i = new Intent(this, VoiceService.class);
         if (Build.VERSION.SDK_INT >= 26) startForegroundService(i); else startService(i);
-        status.setText("الحالة: يستمع في الخلفية — قل «يا مساعد»");
+        status.setText("الحالة: يستمع — متصل بالإنترنت — قل «يا مساعد»");
     }
 
     @Override public void onRequestPermissionsResult(int r, String[] p, int[] g) {
